@@ -25,16 +25,7 @@ function solve(data) {
         numbers = numbers.concat(obtained)
 
         if(isGear(data, i, j, obtained)){
-            if(obtained[0][0] < obtained[1][0]) gears.push([obtained[0], obtained[1]])
-            if(obtained[0][0] > obtained[1][0]) gears.push([obtained[1], obtained[0]])
-            if(obtained[0][0] == obtained[1][0]){
-                if(obtained[0][1] < obtained[1][1]){
-                    gears.push([obtained[0], obtained[1]])
-                } 
-                else{
-                    gears.push([obtained[1], obtained[0]])
-                }
-            }
+            gears.push(obtained)
         }
       }
     }
@@ -43,7 +34,6 @@ function solve(data) {
   const filteredNumbers = numbers.filter((item, index, self) => self.findIndex(otherItem => item.every((value, i) => value === otherItem[i])) === index);
   const sumFirstIndex = filteredNumbers.reduce((sum, item) => sum + item[0], 0);
 
-//   console.log("GEARS", gears)
   gears = gears.filter((item, index, self) => self.findIndex(otherItem => JSON.stringify(otherItem) === JSON.stringify(item)) === index);
 
   const gearTotalRatio = gears.reduce((sum, item) => sum + (item[0][0] * item[1][0]), 0);
