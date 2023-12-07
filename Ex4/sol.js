@@ -26,8 +26,8 @@ function solve(data) {
   for(let i =0; i < data.length; i++){
     const line = data[i];
     const dataNumbers = line.split(":")[1];
-    const winningNumbers = dataNumbers.split("|")[0].trim().split(" ").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
-    const myNumbers = dataNumbers.split("|")[1].trim().split(" ").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+    const winningNumbers = new Set(dataNumbers.split("|")[0].trim().split(" ").map(n => parseInt(n.trim())).filter(n => !isNaN(n)));
+    const myNumbers = new Set(dataNumbers.split("|")[1].trim().split(" ").map(n => parseInt(n.trim())).filter(n => !isNaN(n)));
 
     part1 += solvePart1(winningNumbers, myNumbers);
     for(let j = 0; j < dataCopies[i]; j++){
@@ -42,9 +42,8 @@ function solve(data) {
 
 function solvePart1(winningNumbers, myNumbers ){
   let res =0;
-  for(let i =0; i < myNumbers.length; i++){
-    let n = myNumbers[i];
-    if(winningNumbers.some(number => number == n)) res++;
+  for(let n of myNumbers){
+    if(winningNumbers.has(n)) res++;
   }
 
   return res > 0 ? 1 << (res-1) : 0
@@ -52,9 +51,8 @@ function solvePart1(winningNumbers, myNumbers ){
 
 function solvePart2(dataCopies, index, winningNumbers, myNumbers ){
   let res =0;
-  for(let i =0; i < myNumbers.length; i++){
-    let n = myNumbers[i];
-    if(winningNumbers.some(number => number == n)) res++;
+  for(let n of myNumbers){
+    if(winningNumbers.has(n)) res++;
   }
 
   for(let i =0; i < res; i++){
